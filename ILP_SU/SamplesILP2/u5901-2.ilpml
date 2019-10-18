@@ -1,8 +1,0 @@
-function foo(x)
-(2 * x);
-
-function pseudosequence(one, two)
-two;
-
-let y = 11 in
-foo(pseudosequence ((y = y + 1), y))

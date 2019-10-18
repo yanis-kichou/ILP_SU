@@ -1,7 +1,0 @@
-function f(ma_3angle)
-(
-  ma_3angle / 3
-);
-
-f(3 * 5491)
-
