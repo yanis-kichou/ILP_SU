@@ -27,4 +27,5 @@ public class ASTinteger extends ASTconstant implements IASTinteger {
             throws Anomaly {
         return visitor.visit(this, data);
     }
+    
 }

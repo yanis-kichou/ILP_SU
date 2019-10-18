@@ -73,6 +73,7 @@ public class InterpreterTest {
     	configureRunner(run);
     	run.testFile(file);
     	run.checkPrintingAndResult(file);
+    	
     }
         
     @Parameters(name = "{0}")
