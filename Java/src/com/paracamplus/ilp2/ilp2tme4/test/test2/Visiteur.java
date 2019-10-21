@@ -13,11 +13,11 @@ import com.paracamplus.ilp1.interfaces.IASTsequence;
 import com.paracamplus.ilp1.interfaces.IASTstring;
 import com.paracamplus.ilp1.interfaces.IASTunaryOperation;
 import com.paracamplus.ilp1.interfaces.IASTvariable;
-import com.paracamplus.ilp2.ilp2tme4.test.test2.ASTfactory;
+import com.paracamplus.ilp2.ilp2tme4.ast.ASTfactory;
+import com.paracamplus.ilp2.ilp2tme4.interfaces.IASTfactory;
 import com.paracamplus.ilp2.ilp2tme4.interfaces.IASTunless;
 import com.paracamplus.ilp2.ilp2tme4.interfaces.IASTvisitor;
 import com.paracamplus.ilp2.interfaces.IASTassignment;
-import com.paracamplus.ilp2.ilp2tme4.test.test2.IASTfactory;
 import com.paracamplus.ilp2.interfaces.IASTfunctionDefinition;
 import com.paracamplus.ilp2.interfaces.IASTloop;
 import com.paracamplus.ilp2.interfaces.IASTprogram;
@@ -127,7 +127,7 @@ public class Visiteur implements IASTvisitor<IASTexpression,Void,Throwable> {
 
 	@Override
 	public IASTexpression visit(IASTunless iast, Void data) throws Throwable {
-		return f.newUnless(iast.getCondition().accept(this, data), iast.getConsequence().accept(this, data));
+		return f.newAlternative(iast.getCondition().accept(this, data),f.newBooleanConstant("false"),iast.getConsequence().accept(this, data));
 	}
 
 }

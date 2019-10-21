@@ -1,11 +1,8 @@
 package com.paracamplus.ilp2.ilp2tme4.ast;
 
-import com.paracamplus.ilp1.ast.ASTalternative;
-import com.paracamplus.ilp1.ast.ASTboolean;
 import com.paracamplus.ilp1.ast.ASTexpression;
-import com.paracamplus.ilp1.interfaces.IASTalternative;
 import com.paracamplus.ilp1.interfaces.IASTexpression;
-import com.paracamplus.ilp1.interfaces.IASTvisitor;
+import com.paracamplus.ilp2.ilp2tme4.interfaces.IASTvisitor;
 import com.paracamplus.ilp2.ilp2tme4.interfaces.IASTunless;
 
 public class ASTunless extends ASTexpression implements IASTunless{
@@ -20,10 +17,9 @@ public class ASTunless extends ASTexpression implements IASTunless{
 	}
 
 	@Override
-	public <Result, Data, Anomaly extends Throwable> Result accept(IASTvisitor<Result, Data, Anomaly> visitor,
+	public <Result, Data, Anomaly extends Throwable> Result accept(com.paracamplus.ilp1.interfaces.IASTvisitor<Result, Data, Anomaly> visitor,
 			Data data) throws Anomaly {
-		IASTalternative alternatif=new ASTalternative(condition, new ASTboolean("false"), consequence);
-		return visitor.visit(alternatif, data);
+		return ((IASTvisitor <Result, Data, Anomaly>)visitor).visit(this, data);
 	}
 
 	@Override

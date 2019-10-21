@@ -1,4 +1,4 @@
-package com.paracamplus.ilp2.ilp2tme4.test.test2;
+package com.paracamplus.ilp2.ilp2tme4.test.test3;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -6,7 +6,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import com.paracamplus.ilp1.parser.ParseException;
 import com.paracamplus.ilp2.ilp2tme4.interfaces.IASTfactory;
-import com.paracamplus.ilp2.ilp2tme4.test.test2.ILPMLListener;
+import com.paracamplus.ilp2.ilp2tme4.test.test3.ILPMLListener;
 import com.paracamplus.ilp2.interfaces.IASTprogram;
 
 import antlr4.ILPMLgrammar2tme4Lexer;
@@ -33,7 +33,7 @@ public class ILPMLParser  extends com.paracamplus.ilp2.parser.ilpml.ILPMLParser{
 			ParseTreeWalker walker = new ParseTreeWalker();
 			ILPMLListener extractor = new ILPMLListener((IASTfactory)factory);
 			walker.walk(extractor, tree);	
-			return new Visiteur().visit(tree.node);
+			return tree.node;
 		} catch (Exception e) {
 			throw new ParseException(e);
 		} catch (Throwable e) {
