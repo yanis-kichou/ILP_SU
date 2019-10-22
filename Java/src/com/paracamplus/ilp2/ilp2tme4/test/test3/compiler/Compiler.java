@@ -11,14 +11,14 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Set;
 
-import com.paracamplus.ilp1.ast.ASTalternative;
 import com.paracamplus.ilp1.ast.ASTboolean;
+import com.paracamplus.ilp1.compiler.AssignDestination;
 import com.paracamplus.ilp1.compiler.CompilationException;
 import com.paracamplus.ilp1.compiler.NoDestination;
 import com.paracamplus.ilp1.compiler.interfaces.IASTCglobalVariable;
 import com.paracamplus.ilp1.compiler.interfaces.IGlobalVariableEnvironment;
 import com.paracamplus.ilp1.compiler.interfaces.IOperatorEnvironment;
-import com.paracamplus.ilp1.interfaces.IASTalternative;
+import com.paracamplus.ilp1.interfaces.IASTvariable;
 import com.paracamplus.ilp2.ilp2tme4.test.test3.compiler.FreeVariableCollector;
 import com.paracamplus.ilp2.ilp2tme4.test.test3.compiler.GlobalVariableCollector;
 import com.paracamplus.ilp2.compiler.interfaces.IASTCprogram;
@@ -46,9 +46,19 @@ implements IASTCvisitor<Void, Compiler.Context, CompilationException>{
     }
     @Override
 	public Void visit(IASTunless iast, Context context) throws CompilationException{
-    	IASTalternative i =new ASTalternative(iast.getCondition(), new ASTboolean("false"), iast.getConsequence());
-		i.accept(this, context);
-    	return null;
+    	IASTvariable tmp1 = context.newTemporaryVariable();
+        emit("{ \n");
+        emit("  ILP_Object " + tmp1.getMangledName() + "; \n");
+        Context c = context.redirect(new AssignDestination(tmp1));
+        iast.getCondition().accept(this, c);
+        emit("  if ( ILP_isEquivalentToTrue(");
+        emit(tmp1.getMangledName());
+        emit(" ) ) {\n");
+        new ASTboolean("false").accept(this, context);
+            emit("\n  } else {\n");
+            iast.getConsequence().accept(this, context);
+        emit("\n  }\n}\n");
+        return null;
     
     }
     @Override

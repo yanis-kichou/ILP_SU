@@ -13,8 +13,10 @@ extends com.paracamplus.ilp2.compiler.normalizer.Normalizer
 implements 
  IASTvisitor<IASTexpression, INormalizationEnvironment, CompilationException> {
 
+	INormalizationFactory factory;
 	public Normalizer(INormalizationFactory factory) {
 		super(factory);
+		this.factory=factory;
 		
 	}
 
@@ -23,7 +25,7 @@ implements
 		
 		IASTexpression c = iast.getCondition().accept(this, data);
         IASTexpression t = iast.getConsequence().accept(this, data);
-        return factory.newAlternative(c, factory.newBooleanConstant("false"), t);
+        return factory.newUnless(c, t);
         }
 
 }
